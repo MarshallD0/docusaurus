@@ -18,7 +18,7 @@ Guía completa para ejecutar la aplicación de fase 3 en tu entorno local.
 
 Si quieres que funcione el bot de Telegram:
 1. Crea un bot nuevo en [@BotFather](https://t.me/botfather) en Telegram
-2. Recibiras un token como `123456789:ABCdefGHIjklMNOpqrSTUvwxYZ...`
+2. Recibiras un token como: `[TU_TELEGRAM_BOT_TOKEN_AQUI]`
 3. Guarda este token: lo necesitaras en variables de entorno
 
 Si quieres que funcione el parser con LLM:
@@ -34,10 +34,10 @@ Antees de arrancar, define las credenciales (reemplaza con tus valores reales):
 ```powershell
 # Telegram (requerido para que funcione el bot)
 $env:TELEGRAM_BOT_NAME="MiOracleBotDemo"
-$env:TELEGRAM_BOT_TOKEN="123456789:ABCdefGHIjklMNOpqrSTUvwxYZ..."
+$env:TELEGRAM_BOT_TOKEN="[TU_TELEGRAM_BOT_TOKEN_AQUI]"
 
 # Groq/LLM (opcional, para parsing con IA)
-$env:AGENT_AI_API_KEY="gsk_..."
+$env:AGENT_AI_API_KEY="[TU_GROQ_API_KEY_AQUI]"
 $env:AGENT_AI_BASE_URL="https://api.groq.com/openai/v1"
 $env:AGENT_AI_MODEL="llama-3.3-70b-versatile"
 ```
@@ -45,8 +45,8 @@ $env:AGENT_AI_MODEL="llama-3.3-70b-versatile"
 ### En Bash/Zsh (macOS/Linux)
 ```bash
 export TELEGRAM_BOT_NAME="MiOracleBotDemo"
-export TELEGRAM_BOT_TOKEN="123456789:ABCdefGHIjklMNOpqrSTUvwxYZ..."
-export AGENT_AI_API_KEY="gsk_..."
+export TELEGRAM_BOT_TOKEN="[TU_TELEGRAM_BOT_TOKEN_AQUI]"
+export AGENT_AI_API_KEY="[TU_GROQ_API_KEY_AQUI]"
 export AGENT_AI_BASE_URL="https://api.groq.com/openai/v1"
 export AGENT_AI_MODEL="llama-3.3-70b-versatile"
 ```
