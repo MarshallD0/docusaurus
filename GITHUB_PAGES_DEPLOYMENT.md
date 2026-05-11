@@ -3,7 +3,7 @@
 ## Paso 1: Crear repositorio en GitHub (si aún no existe)
 
 1. Ve a https://github.com/new
-2. Crea un nuevo repositorio llamado `telegram-agent-ui` (o el nombre que prefieras)
+2. Crea un nuevo repositorio llamado `docusaurus` (o el nombre que prefieras)
 3. **IMPORTANTE**: Déjalo vacio (sin README, ni .gitignore)
 
 ## Paso 2: Agregar el remote y hacer push
@@ -12,7 +12,7 @@ En PowerShell, desde `telegram-agent-ui-phase3.5/`:
 
 ```powershell
 # Reemplaza TU_USUARIO con tu usuario de GitHub
-git remote add origin https://github.com/TU_USUARIO/telegram-agent-ui.git
+git remote add origin https://github.com/TU_USUARIO/docusaurus.git
 
 # Hacer push de los cambios
 git branch -M main
@@ -43,7 +43,7 @@ Reemplaza `example.com` con tu URL de GitHub Pages (usualmente `https://TU_USUAR
 
 ```typescript
 url: 'https://TU_USUARIO.github.io',
-baseUrl: '/telegram-agent-ui/',
+baseUrl: '/docusaurus/',
 ```
 
 Si tu repositorio es `telegram-agent-ui`, la baseUrl es `/telegram-agent-ui/`.
@@ -67,7 +67,7 @@ GitHub Pages se actualizará automáticamente en unos minutos.
 ## URLs finales
 
 - Repositorio: `https://github.com/TU_USUARIO/telegram-agent-ui`
-- Sitio en vivo: `https://TU_USUARIO.github.io/telegram-agent-ui`
+- Sitio en vivo: `https://TU_USUARIO.github.io/docusaurus`
 
 ## Verificar deployment
 
