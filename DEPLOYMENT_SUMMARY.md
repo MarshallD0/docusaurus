@@ -9,7 +9,7 @@ Tu proyecto está completamente en GitHub: https://github.com/MarshallD0/docusau
 ### Paso 1: Configurar GitHub Pages
 1. Ve a: https://github.com/MarshallD0/docusaurus/settings/pages
 2. En **Branch**: selecciona `main`
-3. En **Folder**: selecciona `docusaurus/build`
+3. En **Folder**: selecciona `docs`
 4. Haz clic en **Save**
 
 ### Paso 2: Esperar
@@ -19,7 +19,7 @@ Tu proyecto está completamente en GitHub: https://github.com/MarshallD0/docusau
 
 ## 📊 Resumen Técnico - Estrategia de Despliegue (Versión Estudiante)
 
-**¿Qué hicimos?** Construimos un sitio de documentación con Docusaurus y lo subimos a GitHub Pages. El flujo es simple: escribimos documentación en Markdown, la compilamos con `npm run build` para generar HTML estático, y lo pusheamos a GitHub. GitHub Pages sirve automáticamente los archivos estáticos sin necesidad de un servidor backend. **Ajustes:** Configuramos el `baseUrl` para que funcione en la subruta `/docusaurus/`, incluimos diagramas Mermaid, y protegimos las credenciales usando variables de entorno. **Problemas:** La carpeta `build` estaba excluida en `.gitignore`, así que no se subía a GitHub (lo solucionamos permitiendo que GitHub Pages la lea directamente desde el repositorio).
+**¿Qué hicimos?** Construimos un sitio de documentación con Docusaurus y lo subimos a GitHub Pages. El flujo es simple: escribimos documentación en Markdown, la compilamos con `npm run build` para generar HTML estático, y lo pusheamos a GitHub. GitHub Pages sirve automáticamente los archivos estáticos sin necesidad de un servidor backend. **Ajustes:** Configuramos el `baseUrl` para que funcione en la subruta `/docusaurus/`, incluimos diagramas Mermaid, y protegimos las credenciales usando variables de entorno. **Problemas:** GitHub Pages solo permite `root` o `docs`, asi que enviamos el build a `docs` para que se publique correctamente.
 
 ---
 
@@ -27,7 +27,7 @@ Tu proyecto está completamente en GitHub: https://github.com/MarshallD0/docusau
 
 Después de seguir estos 3 pasos, verifica que:
 
-- [ ] GitHub Pages está usando rama `main` y carpeta `docusaurus/build/`
+- [ ] GitHub Pages está usando rama `main` y carpeta `docs/`
 - [ ] El sitio está accesible en: https://marshallD0.github.io/docusaurus
 - [ ] La documentación se ve correctamente en español
 - [ ] Los diagramas Mermaid se renderizan
@@ -42,7 +42,7 @@ Cada vez que hagas cambios, el flujo es:
 cd docusaurus
 # Edita archivos en docs/phase-3/ o src/
 
-# 2. Compilar
+# 2. Compilar (genera /docs)
 npm run build
 
 # 3. Hacer commit y push
@@ -52,7 +52,7 @@ git commit -m "Update: descripción de cambios"
 git push origin main
 ```
 
-GitHub Pages detectará automáticamente los cambios en `docusaurus/build/` y actualizará el sitio.
+GitHub Pages detectará automáticamente los cambios en `docs/` y actualizará el sitio.
 
 ---
 

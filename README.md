@@ -16,7 +16,8 @@ telegram-agent-ui-phase3.5/
 │   ├── docs/phase-3/               # Documentos en espanol
 │   ├── src/                        # Estilos y componentes
 │   ├── docusaurus.config.ts        # Configuracion principal
-│   └── build/                      # Sitio compilado
+│   └── build/                      # Build local (salida temporal)
+├── docs/                           # Sitio compilado para GitHub Pages
 ├── telegram-agent-ui-phase3/       # Backend Spring Boot Java
 │   └── pom.xml
 ├── GITHUB_PAGES_DEPLOYMENT.md      # Pasos de despliegue
@@ -42,7 +43,7 @@ npm run build
 
 ## GitHub Pages (resumen)
 
-1. En GitHub Pages, usa rama `main` y carpeta `docusaurus/build`.
+1. En GitHub Pages, usa rama `main` y carpeta `docs`.
 2. El sitio publico queda en `https://marshallD0.github.io/docusaurus`.
 
 ## Documentacion

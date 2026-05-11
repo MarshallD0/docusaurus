@@ -25,10 +25,10 @@ git push -u origin main
 2. Ve a **Settings** → **Pages**
 3. En **Source**, selecciona:
    - Branch: `main`
-   - Folder: `docusaurus/build`
+   - Folder: `docs`
 4. Haz clic en **Save**
 
-GitHub Pages ahora buildea automáticamente desde `docusaurus/build`.
+GitHub Pages ahora publica desde `docs`.
 
 ## Paso 4: Configurar Docusaurus (Opcional pero recomendado)
 
@@ -57,7 +57,7 @@ cd docusaurus
 npm run build
 
 cd ..
-git add docusaurus/build/ docusaurus/docs/ ...
+git add docs/ docusaurus/docs/ ...
 git commit -m "Update: descripción de cambios"
 git push origin main
 ```
@@ -72,4 +72,4 @@ GitHub Pages se actualizará automáticamente en unos minutos.
 ## Verificar deployment
 
 - Ve a **Settings** → **Pages** en tu repositorio
-- Busca el link del sitio o visita manualmente: `https://TU_USUARIO.github.io/telegram-agent-ui`
+- Busca el link del sitio o visita manualmente: `https://TU_USUARIO.github.io/docusaurus`

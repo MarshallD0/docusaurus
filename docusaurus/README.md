@@ -22,7 +22,7 @@ Inicia un servidor en http://localhost:3000 con recarga en caliente.
 npm run build
 ```
 
-Genera HTML estatico en `build/` para GitHub Pages.
+Genera HTML estatico en `../docs/` para GitHub Pages.
 
 ## Despliegue en GitHub Pages
 
