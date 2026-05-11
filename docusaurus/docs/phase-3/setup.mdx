@@ -1,0 +1,134 @@
+---
+sidebar_position: 3
+title: Configuracion
+---
+
+# Configuracion
+
+Guía completa para ejecutar la aplicación de fase 3 en tu entorno local.
+
+## Requisitos previos
+
+### Sistema
+- **Java 17+** (verifica con `java -version`)
+- **Maven 3.8+** (verifica con `mvn -version`)
+- **Git** (opcional, para clonar el repositorio)
+
+### Cuentas y credenciales (opcional pero recomendado)
+
+Si quieres que funcione el bot de Telegram:
+1. Crea un bot nuevo en [@BotFather](https://t.me/botfather) en Telegram
+2. Recibiras un token como `123456789:ABCdefGHIjklMNOpqrSTUvwxYZ...`
+3. Guarda este token: lo necesitaras en variables de entorno
+
+Si quieres que funcione el parser con LLM:
+1. Crea una cuenta en [console.groq.com](https://console.groq.com)
+2. Ve a API Keys y crea una nueva
+3. Guarda la key: la necesitaras en variables de entorno
+
+## Variables de entorno
+
+Antees de arrancar, define las credenciales (reemplaza con tus valores reales):
+
+### En PowerShell (Windows)
+```powershell
+# Telegram (requerido para que funcione el bot)
+$env:TELEGRAM_BOT_NAME="MiOracleBotDemo"
+$env:TELEGRAM_BOT_TOKEN="123456789:ABCdefGHIjklMNOpqrSTUvwxYZ..."
+
+# Groq/LLM (opcional, para parsing con IA)
+$env:AGENT_AI_API_KEY="gsk_..."
+$env:AGENT_AI_BASE_URL="https://api.groq.com/openai/v1"
+$env:AGENT_AI_MODEL="llama-3.3-70b-versatile"
+```
+
+### En Bash/Zsh (macOS/Linux)
+```bash
+export TELEGRAM_BOT_NAME="MiOracleBotDemo"
+export TELEGRAM_BOT_TOKEN="123456789:ABCdefGHIjklMNOpqrSTUvwxYZ..."
+export AGENT_AI_API_KEY="gsk_..."
+export AGENT_AI_BASE_URL="https://api.groq.com/openai/v1"
+export AGENT_AI_MODEL="llama-3.3-70b-versatile"
+```
+
+:::info
+La aplicación lee estos valores desde `src/main/resources/application.properties` que usa variables de entorno como fallback. Si no defines una variable, se usa el valor por defecto del archivo `.example`.
+:::
+
+## Pasos para iniciar
+
+### 1. Clonar o ubicarse en el directorio del proyecto
+```bash
+cd "telegram-agent-ui-phase3"
+ls -la  # Deberias ver pom.xml, src/, etc.
+```
+
+### 2. Limpiar builds anteriores (opcional pero recomendado)
+```bash
+mvn clean
+```
+
+### 3. Compilar y ejecutar
+```bash
+mvn spring-boot:run
+```
+
+Veras output similar a:
+```
+[INFO] Scanning for projects...
+...
+2026-05-11T12:00:00.000-06:00  INFO [...] Starting TelegramAgentUiPhase3Application
+...
+2026-05-11T12:00:02.123-06:00  INFO [...] Tomcat initialized with port 8080
+2026-05-11T12:00:03.456-06:00  INFO [...] Started TelegramAgentUiPhase3Application in 3.2 seconds
+```
+
+## Lo que deberias ver
+
+### UI web
+- Abre `http://localhost:8080` en tu navegador
+- Veras un formulario para crear tareas
+- Un chat para consultar el sistema
+- Una lista de tareas existentes
+
+### Bot de Telegram
+- Si configuraste `TELEGRAM_BOT_TOKEN`, el bot estara en linea
+- Envia un mensaje al bot desde Telegram
+- El bot procesara la intencion y respondera
+
+### APIs REST
+```bash
+# Listar todas las tareas
+curl http://localhost:8080/api/tasks
+
+# Crear una nueva tarea
+curl -X POST http://localhost:8080/api/tasks \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Mi primera tarea", "description": "Hacer pruebas"}'
+
+# Chat del asistente
+curl -X POST http://localhost:8080/api/assistant/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "¿cuantas tareas tengo?"}'
+```
+
+## Troubleshooting
+
+### El bot no responde en Telegram
+- Verifica que `TELEGRAM_BOT_TOKEN` sea valido
+- Verifica que el token este correcto (sin espacios extra)
+- Intenta con un bot nuevo desde @BotFather
+- Revisa los logs: busca `ERROR` o `exception`
+
+### El LLM no funciona
+- Verifica que `AGENT_AI_API_KEY` sea valida
+- Verifica que no este vencida en la consola de Groq
+- El sistema deberia caer al parser basado en reglas automaticamente
+
+### Puerto 8080 ya esta en uso
+- Identifica que proceso usa el puerto: `lsof -i :8080` (macOS/Linux) o `netstat -ano | findstr :8080` (Windows)
+- Detiene ese proceso o cambia el puerto en `application.properties`: `server.port=8081`
+
+### Errores de compilacion (Java version)
+- Asegura que tienes Java 17+: `java -version`
+- Si solo tienes Java 11, descarga Java 17+ de [oracle.com](https://www.oracle.com/java/technologies/downloads/)

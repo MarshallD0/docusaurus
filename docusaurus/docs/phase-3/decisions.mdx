@@ -1,0 +1,127 @@
+---
+sidebar_position: 5
+title: Decisiones y riesgos
+---
+
+# Decisiones y riesgos
+
+## Decisiones arquitectonicas
+
+### 1. Un unico runtime de Spring Boot
+
+**Decision:** Usar una sola aplicacion Spring Boot para Telegram, API REST y UI estatica.
+
+**Por que:**
+- Simplicidad operativa: Un JAR, un puerto, un proceso.
+- Facilita el despliegue a produccion.
+- El workspace compartido garantiza consistencia entre canales.
+
+**Trade-off:**
+- Si una interfaz tiene picos de carga, afecta a las otras.
+- Para escala masiva, es mejor separar por dominio (microservicios).
+
+**Alternativa rechazada:** Microservicios desde el inicio.
+- Aumentaria complejidad sin valor inmediato.
+- Mejor hacerlo cuando tengas necesidad de escala.
+
+### 2. Workspace en memoria
+
+**Decision:** Almacenar tareas y sprints en `HashMap` en RAM, no en base de datos.
+
+**Por que:**
+- Fase de demostracion: el objetivo es mostrar arquitectura, no persistencia.
+- Reduce dependencias externas.
+- Startup mas rapido (sin migraciones de DB).
+- Ideal para prototipado y testing.
+
+**Trade-off:**
+- Los datos se pierden si el servidor se detiene.
+- No escala a multiples instancias.
+
+**Migracion futura:**
+- Reemplazar `InMemoryProjectWorkspaceService` con `JpaProjectWorkspaceService`.
+- Agregar `@Entity TaskItem` con persistencia en PostgreSQL.
+- El resto del codigo no cambia (contrato de `ProjectWorkspaceService` se mantiene).
+
+### 3. Parser con fallback inteligente
+
+**Decision:** Intentar LLM primero, caer a reglas si falla.
+
+```java
+public Intent parse(String text) {
+  try {
+    return llmParser.parse(text);  // Groq
+  } catch (Exception e) {
+    logger.warn("LLM failed, using rule-based", e);
+    return ruleBasedParser.parse(text);  // Fallback
+  }
+}
+```
+
+**Por que:**
+- LLM es mas preciso pero menos predecible.
+- Reglas son lentas pero garantizadas.
+- Graceful degradation: el sistema sigue funcionando sin LLM.
+
+**Trade-off:**
+- Mantenimiento de dos parsers.
+- Inconsistencia potencial entre ambos.
+
+### 4. UI estatica servida por Spring Boot
+
+**Decision:** Servir HTML/CSS/JS directamente desde Spring Boot, no separar frontend.
+
+**Por que:**
+- El frontend es simple (no es SPA compleja).
+- Simplifica el despliegue (un unico archivo JAR).
+- Facilita la autenticacion y CORS.
+
+**Trade-off:**
+- El frontend esta acoplado al backend (mismo versionado).
+- Para un frontend complejo, es mejor separar (React SPA + API separada).
+
+**Migracion futura:**
+- Crear un frontend en React en carpeta separada.
+- Servir desde un CDN o nginx.
+- Backend sigue siendo la API REST.
+
+### 5. API key y credenciales via variables de entorno
+
+**Decision:** Nunca hardcodear secrets. Usar `$env` variables.
+
+```properties
+telegram.bot.token=${TELEGRAM_BOT_TOKEN:}
+agent.ai.api-key=${AGENT_AI_API_KEY:}
+```
+
+**Por que:**
+- Seguridad: secrets no en control de versiones.
+- Portabilidad: mismo codigo, diferentes credenciales en dev/staging/prod.
+- Estandar en la industria (12-factor app).
+
+## Riesgos y mitigaciones
+
+| Riesgo | Probabilidad | Impacto | Mitigacion |
+| --- | --- | --- | --- |
+| Workspace en memoria se pierde al reiniciar | Alta | Bajo | Es demo. Documentacion clara. |
+| Token de Telegram vencido o invalido | Media | Medio | Usuario recibe error al arrancar. Log claro. |
+| API key de Groq vencida | Media | Bajo | Sistema cae a parser basado en reglas. |
+| Conflictos si multiples instancias en memoria | Media | Alto | Actualmente soporta 1 instancia. Migrar a DB antes de escalar. |
+| Intencion ambigua no detectada por reglas | Baja | Bajo | LLM deberia haberla interpretado. Fallback razonable. |
+
+## Siguiente evolucion
+
+### Corto plazo (1-2 sprints)
+- Agregar persistencia real con PostgreSQL.
+- Autenticacion de usuarios por canal.
+- Historico de conversaciones.
+
+### Mediano plazo (3-6 meses)
+- Separar frontend (React SPA) del backend.
+- Canales adicionales: Slack, Discord, CLI.
+- Metricas y observabilidad (Prometheus, Grafana).
+
+### Largo plazo (6+ meses)
+- Arquitectura de microservicios si lo requiere el dominio.
+- ML feedback loop para mejorar el parser.
+- Integraciones con sistemas externos (CRM, HR, etc.).

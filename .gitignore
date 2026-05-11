@@ -1,0 +1,27 @@
+# Docusaurus
+docusaurus/build/
+docusaurus/node_modules/
+docusaurus/.docusaurus/
+
+# Spring Boot
+telegram-agent-ui-phase3/target/
+*.class
+*.jar
+*.war
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment
+.env
+.env.local
+*.properties
+
+# Logs
+*.log
+npm-debug.log*

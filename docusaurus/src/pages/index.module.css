@@ -1,0 +1,142 @@
+/**
+ * Premium Hero Banner for Telegram Agent UI Phase 3
+ */
+
+.heroBanner {
+  padding: 6rem 0 5rem;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    #0088cc 0%,
+    #0077b5 25%,
+    #00558a 50%,
+    #0066a1 75%,
+    #0088cc 100%
+  );
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.heroBanner::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.heroBanner::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -5%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 3rem 1.5rem;
+  }
+}
+
+.heroCopy {
+  max-width: 760px;
+  position: relative;
+  z-index: 1;
+  animation: slideInUp 700ms ease 150ms both;
+}
+
+.kicker {
+  margin: 0 0 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.heroTitle {
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  line-height: 1.1;
+  margin-bottom: 1.25rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  animation: slideInUp 700ms ease 250ms both;
+}
+
+.heroSubtitle {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  max-width: 60ch;
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 400;
+  animation: slideInUp 700ms ease 350ms both;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 2.25rem;
+  animation: slideInUp 700ms ease 450ms both;
+}
+
+.buttons :global(.button) {
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  transition: all var(--ifm-transition-smooth);
+  text-transform: capitalize;
+}
+
+.buttons :global(.button--secondary) {
+  background: rgba(255, 255, 255, 0.95);
+  color: #0088cc;
+  border: 2px solid rgba(255, 255, 255, 0.95);
+}
+
+.buttons :global(.button--secondary:hover) {
+  background: white;
+  color: #0066a1;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+.buttons :global(.button--outline) {
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  background: transparent;
+}
+
+.buttons :global(.button--outline:hover) {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: white;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}

@@ -1,0 +1,149 @@
+/**
+ * Telegram Agent UI Phase 3 - Global Styles
+ * Premium, modern design with Telegram-inspired color palette
+ */
+
+/* === Color System === */
+:root {
+  --ifm-color-primary: #0088cc;
+  --ifm-color-primary-dark: #0077b5;
+  --ifm-color-primary-darker: #0066a1;
+  --ifm-color-primary-darkest: #00558a;
+  --ifm-color-primary-light: #1a9fe0;
+  --ifm-color-primary-lighter: #33b0e6;
+  --ifm-color-primary-lightest: #4dbfed;
+  
+  /* Extended palette */
+  --telegram-blue: #0088cc;
+  --telegram-light: #1a9fe0;
+  --telegram-dark: #0066a1;
+  --neutral-50: #f9fafb;
+  --neutral-100: #f3f4f6;
+  --neutral-200: #e5e7eb;
+  --neutral-300: #d1d5db;
+  --neutral-700: #374151;
+  --neutral-900: #111827;
+  
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 136, 204, 0.08);
+  
+  /* Typography */
+  --ifm-font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --ifm-font-family-monospace: 'Menlo', 'Monaco', 'Courier New', monospace;
+  --ifm-line-height-base: 1.65;
+  
+  /* Spacing */
+  --ifm-spacing-unit: 0.5rem;
+  
+  /* Transitions */
+  --ifm-transition-fast: 150ms ease;
+  --ifm-transition-smooth: 300ms ease;
+  --ifm-transition-slow: 500ms ease;
+}
+
+/* Dark mode palette */
+[data-theme='dark'] {
+  --ifm-color-primary: #1a9fe0;
+  --ifm-color-primary-dark: #0088cc;
+  --ifm-color-primary-darker: #0077b5;
+  --ifm-color-primary-darkest: #0066a1;
+  --ifm-color-primary-light: #33b0e6;
+  --ifm-color-primary-lighter: #4dbfed;
+  --ifm-color-primary-lightest: #66c0f4;
+  --docusaurus-highlighted-code-line-bg: rgba(26, 159, 224, 0.12);
+  
+  --neutral-50: #1f2937;
+  --neutral-100: #111827;
+  --neutral-200: #0f172a;
+  --neutral-700: #e5e7eb;
+  --neutral-900: #f9fafb;
+}
+
+/* === Global Styles === */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-feature-settings: 'kern' 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Improve links */
+a {
+  transition: color var(--ifm-transition-fast);
+}
+
+/* Code blocks enhancement */
+.docusaurus-highlight-code-line {
+  background-color: rgba(0, 136, 204, 0.1);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+code {
+  background-color: rgba(0, 136, 204, 0.08);
+  border-radius: 0.25rem;
+  color: var(--telegram-dark);
+  padding: 0.1rem 0.3rem;
+  font-size: 0.9em;
+}
+
+pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+/* === Animations === */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* === Scrollbar === */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--neutral-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ifm-color-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ifm-color-primary-dark);
+}

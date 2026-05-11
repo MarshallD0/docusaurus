@@ -1,0 +1,63 @@
+---
+sidebar_position: 1
+title: Resumen
+---
+
+# Telegram Agent UI Phase 3
+
+La fase 3 es una demostracion completa de un sistema multicanal donde **una sola aplicacion backend sirve a multiples interfaces** —Telegram, web UI, y API REST— sin duplicar logica de negocio ni comportamiento.
+
+Esta arquitectura muestra como evolucionar desde un bot simple hacia un ecosistema de servicios compartidos manteniendo coherencia y reutilizacion de codigo.
+
+## Que demuestra esta fase
+
+### Reutilizacion de canales
+- Un `AgentOrchestrator` compartido interpreta la intencion del usuario, sin importar si viene de Telegram, de la web o de una API.
+- La misma logica de dominio (`ProjectWorkspaceService`) gestiona el estado para todos los canales simultaneamente.
+- Los usuarios pueden crear una tarea desde Telegram y verla actualizada en la UI web al instante.
+
+### Inteligencia con fallback seguro
+- El sistema puede usar un parser LLM (`LlmIntentParser`) para interpretar lenguaje natural mediante una API compatible con OpenAI/Groq.
+- Si la API LLM no esta disponible, cae automaticamente a un parser basado en reglas (`RuleBasedIntentParser`) que sigue siendo funcional.
+- No hay punto de fallo critico: el sistema degrada gracefully.
+
+### Servicio unificado
+- Todo se ejecuta en un solo Spring Boot runtime.
+- La UI estatica, el bot de Telegram, y las APIs REST comparten el mismo servidor.
+- Facilita el despliegue, monitoreo y escalado.
+
+## Superficies principales
+
+### Bot de Telegram (canal conversacional)
+- **Interfaz**: Long polling de Telegram con `telegrambots-springboot-longpolling-starter`.
+- **Entrada**: Mensajes de texto de usuarios.
+- **Salida**: Respuestas del `AgentOrchestrator` reenviadas a Telegram.
+- **Caso de uso**: Usuarios que prefieren interactuar via Telegram sin abrir un navegador.
+
+### UI web (canal visual)
+- **Interfaz**: HTML/CSS/JavaScript estatico servido por Spring Boot.
+- **Entrada**: Formularios y clics del usuario en `http://localhost:8080`.
+- **Salida**: Listas dinámicas de tareas, respuestas del chat web.
+- **Caso de uso**: Usuarios que necesitan una vista general del sistema o gestion visual de tareas.
+
+### API REST (canal programático)
+- **Interfaz**: Endpoints REST bajo `/api/tasks` y `/api/assistant/chat`.
+- **Entrada**: JSON en solicitudes HTTP.
+- **Salida**: JSON con respuestas estructuradas.
+- **Caso de uso**: Integraciones con otros sistemas, automaciones, mobile apps.
+
+## Diferencias clave respecto a fases anteriores
+
+| Aspecto | Phase 1 | Phase 2 | Phase 3 |
+| --- | --- | --- | --- |
+| **Canales** | Solo Telegram | Solo Telegram | Telegram + web + API |
+| **Logica compartida** | Bot y parser | Bot y orquestador | Bot, API, UI sobre orquestador único |
+| **Storage** | En memoria | En memoria | En memoria (demo) |
+| **Interfaz** | Solo chat | Chat con intents | Chat + UI visual |
+
+## Leer a continuacion
+
+- **[Arquitectura](./architecture)**: Conoce los componentes y como se conectan.
+- **[Configuracion](./setup)**: Pasos para correr localmente.
+- **[Flujos de ejecucion](./runtime)**: Detalle de las interacciones en tiempo de ejecucion.
+- **[Decisiones y riesgos](./decisions)**: Por qué se tomaron ciertas decisiones y cuales son los trade-offs.
